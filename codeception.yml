@@ -1,0 +1,11 @@
+namespace: App\Tests
+paths:
+    tests: codeceptionTests
+    output: codeceptionTests/_output
+    data: codeceptionTests/_data
+    support: codeceptionTests/_support
+    envs: codeceptionTests/_envs
+actor_suffix: Tester
+params:
+    - .env
+    - .env.codeception

@@ -1,0 +1,13 @@
+#config/packages/fos_oauth_server.yaml
+fos_oauth_server:
+  db_driver: orm       # Drivers available: orm, mongodb, or propel
+  client_class:        App\Entity\OAuth\Client
+  access_token_class:  App\Entity\OAuth\AccessToken
+  refresh_token_class: App\Entity\OAuth\RefreshToken
+  auth_code_class:     App\Entity\OAuth\AuthCode
+  authorize: false
+  service:
+    user_provider: security.user.provider.concrete.app_user_provider #см security.yaml
+    options:
+      access_token_lifetime: 1209600 # TODO: return to 3600 after apps ready
+      refresh_token_lifetime: 2419200 # TODO: return to 1209600 after apps ready

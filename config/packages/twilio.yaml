@@ -1,0 +1,6 @@
+services:
+  Twilio\Rest\Client:
+    public: true
+    arguments:
+      - '%env(TWILIO_AUTH_SID)%'
+      - '%env(TWILIO_AUTH_TOKEN)%'

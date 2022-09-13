@@ -1,0 +1,9 @@
+var/cache
+var/log
+vendor
+docker
+helm
+.*
+!.env.codeception
+!jwt.pem
+asdpublic/bundles

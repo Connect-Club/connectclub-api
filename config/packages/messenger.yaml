@@ -1,0 +1,27 @@
+framework:
+    messenger:
+        transports:
+            async_send_notifications: '%env(MESSENGER_TRANSPORT_DSN)%_send_notifications'
+            async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            async_low_priority: '%env(MESSENGER_TRANSPORT_DSN)%_low_priority'
+            sync: 'sync://'
+            push_sender:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%_push_sender'
+                serializer: App\Messenger\PushSenderSerializer
+        routing:
+            App\Message\SendNotificationMessage: async_send_notifications
+            App\Message\SendNotificationMessageBatch: async_send_notifications
+            App\Message\CheckAvatarPhotoTheHiveAiMessage: async_low_priority
+            App\Message\SendSmsMessage: async
+            App\Message\UploadPhoneContactsMessage: async
+            App\Message\UploadContactMessage: async
+            App\Message\UploadUserToElasticsearchMessage: async_low_priority
+            App\Message\HandleComplaintMessage: async_low_priority
+            App\Messenger\PushSenderMessage: push_sender
+            App\Message\AmplitudeGroupEventsStatisticsMessage: async_low_priority
+            App\Message\AmplitudeEventStatisticsMessage: async_low_priority
+            App\Message\SendSlackMessage: async_low_priority
+            App\Message\SendSlackThreadMessage: async_low_priority
+            App\Message\SyncWithIntercomMessage: async_low_priority
+            App\Message\UpdateTelegramEventMessage: async_low_priority
+            App\Message\InviteAllNetworkToClubMessage: async_low_priority

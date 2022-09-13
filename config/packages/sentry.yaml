@@ -1,0 +1,16 @@
+sentry:
+  dsn: "%env(resolve:SENTRY_DSN)%"
+  messenger:
+    enabled: true
+    capture_soft_fails: true
+  register_error_listener: false # Disables the ErrorListener
+  monolog:
+    error_handler:
+      enabled: true
+      level: error
+  options:
+    environment: '%kernel.environment%'
+    excluded_exceptions:
+      - Symfony\Component\Security\Core\Exception\AccessDeniedException
+      - Symfony\Component\HttpKernel\Exception\NotFoundHttpException
+      - Symfony\Component\HttpKernel\Exception\HttpException

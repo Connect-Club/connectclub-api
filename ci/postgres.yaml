@@ -1,0 +1,20 @@
+nameOverride: postgres-prod
+postgresqlDatabase: connect_club
+# postgresqlUsername:
+postgresqlPassword: "..." # create your password
+
+persistence:
+  enabled: true
+  storageClass: ssd
+  size: 100Gi
+
+volumePermissions:
+  enabled: true
+
+pgHbaConfiguration: |
+  host     all             all             10.28.0.0/14            md5
+  host     all             all             10.31.240.0/20          md5
+  host     connect_club    all             34.77.37.171/32         md5
+  local    all             all                                     md5
+  # minikube/loopback
+  host     all             all             127.0.0.0/8             md5

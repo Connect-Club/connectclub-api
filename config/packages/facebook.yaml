@@ -1,0 +1,5 @@
+services:
+  Facebook\Facebook:
+    public: true
+    arguments:
+      - {app_id: '%env(FACEBOOK_OAUTH_APP_ID)%', app_secret: '%env(FACEBOOK_OAUTH_SECRET)%', default_graph_version: '%env(FACEBOOK_OAUTH_DEFAULT_GRAPH_VERSION)%'}

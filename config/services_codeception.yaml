@@ -1,0 +1,51 @@
+services:
+    _defaults:
+        public: true
+    App\Tests\Mock\MockASDecoder:
+        public: true
+    Anboo\AppleSign\ASDecoder:
+        alias: App\Tests\Mock\MockASDecoder
+    App\Tests\Mock\MockGoogleClient:
+        public: true
+    Google_Client:
+        alias: App\Tests\Mock\MockGoogleClient
+    App\Tests\Mock\MockFacebook:
+        public: true
+    Facebook\Facebook:
+        alias: App\Tests\Mock\MockFacebook
+    App\Tests\Mock\MockUserFileUploader:
+        public: true
+        autowire: true
+        bind:
+            $httpClient: '@App\Tests\Mock\MockHttpClient'
+    App\Service\UserFileUploader:
+        alias: App\Tests\Mock\MockUserFileUploader
+    App\Tests\Mock\MockHttpClient:
+        public: true
+    App\Service\SlackClient:
+        autowire: true
+        bind:
+            $client: '@App\Tests\Mock\MockHttpClient'
+    App\Service\TwilioEndpointManager:
+        public: true
+        autowire: true
+    Symfony\Component\Messenger\MessageBusInterface:
+        public: true
+        alias: messenger.bus.default
+    App\Client\GoogleCloudStorageClient:
+        public: true
+    App\Service\JitsiEndpointManager:
+        autowire: true
+        public: true
+    App\Service\EventManager:
+        autowire: true
+        public: true
+    App\Service\VideoRoomNotifier:
+        autowire: true
+        public: true
+    App\Service\Transaction\TransactionManager:
+        class: App\Tests\Mock\TransactionManagerMock
+        autowire: true
+    App\Service\SubscriptionService:
+        autowire: true
+        public: true

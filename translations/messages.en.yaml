@@ -1,0 +1,129 @@
+chat_bot:
+  networking:
+    hello: "Hi! I'm Emma and I'm your networking assistant. Welcome to {communityName}. Are you here to make new connections?"
+    hello_i_am_shying_button: "I'm shy"
+    hello_ready_button: 'Yes'
+    introduce: "Every Saturday I'll invite you to make a new connection."
+    introduce_button: "Okey, I'll be waiting."
+    networking_message_question: "Would you like to meet somebody from {communityName} this week?"
+    question_yes_button: 'Yes'
+    question_skip_button: 'Skip'
+    question_yes_message: "Great, I'll find the relevant match for you and send you all the details soon."
+    question_no_message: "Okay. See you next week then!"
+    partner_found: "{partnerName} from {communityName} is your new contact to meet this week in the community room. Write him now to set up an appointment."
+
+  welcome_new_member: 'Please welcome our new member!'
+  welcome_new_member_notification: '{fullName} joined and ready to connect with you now'
+
+notifications:
+  waiting_list_contact_owners_ask_invite: 'Please invite me'
+
+  ping_user_title: 'Join the room!'
+
+  ping_user_from_scene_room_with_name: "%initiator% wants you to join. They are talking about “%meetingName%” right now. Tap to listen 👉"
+  ping_user_from_scene_room_without_name: "%initiator% wants you to join. They are talking right now. Tap to listen 👉"
+
+  ping_user_from_listeners_room_with_name: "%initiator% wants you to join. %speakers% about “%meetingName%” right now. Tap to listen 👉"
+  ping_user_from_listeners_room_without_name: "%initiator% wants you to join. %speakers% right now. Tap to listen 👉"
+
+  ping_user_from_listeners_speaker_info: 'is talking'
+  ping_user_from_listeners_speakers_info: 'are talking'
+
+  event_schedule_subscription_title: 'Event has started'
+  event_schedule_subscription: 'Tap to listen 👉 “%meetingName%”'
+
+  followed_user_mutual_club_title: 'Join the club room!'
+  followed_user_mutual_club: '%speakers% about “%meetingName%” by “%clubTitle%” right now. Tap to listen 👉'
+
+  registered_as_co_host: '%displayName% added you as a moderator of "%eventName%" on %time%'
+
+  invite-successfully-created: "Great! Just hang out until they reply. If they're free, we'll create a new room for you."
+  invite-cancelled: "%relatedUserName% can’t start a new room now, but maybe later? Thanks for asking!"
+
+  club_new_join_request_title: '🚨 New request to join the "%clubTitle%"'
+  club_event_scheduled_title: '🗓 New event hosted by "%clubTitle%"'
+  club_event_started_title: '🔔 Room started hosted by "%clubTitle%"'
+  club_registered_as_co_host_title: '👑 You are a moderator in an event'
+  club_registered_as_co_host: '%displayName% added you as a moderator of "%eventName%" hosted by %clubTitle% on %time%'
+
+  let_you_in: '🗣 %displayName% let you in'
+
+  registered_as_speaker_title: '🗣 You are a speaker in an event'
+  registered_as_speaker: '%displayName% added you as a speaker of "%eventName%" on %time%'
+
+  event_schedule_starts_24_hours_title: 'Event starts in 24 hours'
+  event_schedule_starts_24_hours: 'Don''t miss out on "%eventName%" on %time%'
+
+  event_schedule_starts_1_hour_title: 'Event starts in 1 hour'
+  event_schedule_starts_1_hour: 'Don''t miss out on "%eventName%" at %time%'
+
+placeholders:
+  empty_meeting_name: 'your favourite topic'
+  empty_club_title: 'your favourite club'
+
+activity:
+  new-user-ask-invite-title: '%relatedUserName% is on the waitlist'
+  new-user-ask-invite: 'One of your contacts wants to join Connect.Club. Tap to let them in 👉'
+
+  user-registered: '%relatedUserName% is here! Do you want to connect them?'
+  new-follower: '%relatedUserName% wants to connect with you!'
+
+  invite-private-video-room-title: 'Join the private room!'
+  invite-private-video-room-without-name: "%relatedUserName% wants you to join the room and speak privately. Tap to join 👉"
+  invite-private-video-room-with-name: "%relatedUserName% wants you to join the room and speak privately about “%meetingName%”. Tap to join 👉"
+
+  welcome-on-boarding-friend-title: 'Your contact joined Connect.Club'
+  welcome-on-boarding-friend: 'Familiarize %relatedUserName% with Connect.Club. Tap to go to a private room 👉'
+  invite-on-boarding-title: 'Welcome to Connect.Club!'
+  invite-on-boarding: '%relatedUserName% wants to help you know more about Connect.Club. Tap to join them in the room! 👉'
+
+  intro: "It's great to see you on board, %userName%\r\nLet's have a quick tour around to see what you can do in our club."
+  connect-you-back: '%relatedUserName% connected you back.'
+
+  video-room-started-title: '%relatedUserName% started a room'
+  video-room-started-with-name: 'Tap to join 👉 “%meetingName%”'
+  video-room-started-without-name: 'Tap to join 👉'
+  club-video-room-started-title: 'A new room has started'
+  club-video-room-started-with-name: '%relatedUserName% is running a room in “%clubTitle%”. Tap to take a look 👉 “%meetingName%”.'
+  club-video-room-started-without-name: '%relatedUserName% is running a room in “%clubTitle%”. Tap to take a look 👉'
+
+  user-schedule-event-title: 'New scheduled event'
+  user-schedule-event: '%relatedUserName% is going to talk about “%meetingName%”. It starts on %dateTime%. Tap to take a look 👉'
+  user-club-schedule-event: '%relatedUserName% has organized “%meetingName%” for “%clubTitle%“ on %dateTime%. Tap to take a look 👉'
+
+  registered-as-co-host-title: 'You are a moderator now'
+  user-club-registered-as-co-host-title: 'You are a club event moderator'
+  registered-as-co-host: 'Don’t miss out! You’ve been appointed as a moderator by %creator% for “%meetingName%” which starts on %dateTime%'
+  user-club-registered-as-co-host: 'Don’t miss out! You’ve been appointed as a moderator by %creator% for “%meetingName%” which starts on %dateTime%'
+
+  registered-as-speaker-title: 'You are a speaker now'
+  user-club-registered-as-speaker-title: 'You are a club event speaker'
+  registered-as-speaker: 'Don’t miss out! You’ve been appointed as a speaker by %creator% for “%meetingName%” which starts on %dateTime%'
+  user-club-registered-as-speaker: 'Don’t miss out! You’ve been appointed as a speaker by %creator% for “%meetingName%” which starts on %dateTime%'
+
+  join-request-was-approved-title: 'Welcome to “%clubTitle%”'
+  join-request-was-approved: "%relatedUserName% (%clubRole%) approved you request"
+
+  new-join-request-title: 'New request to join the club'
+  new-join-request: "%relatedUserName% wants to join “%clubTitle%”. Tap to review 👉"
+
+  new-user-registered-by-invite-code-title: '%relatedUserName% is on the waitlist'
+  new-user-registered-by-invite-code: 'They used your link to join Connect.Club. Tap to let them in 👉'
+
+  new-club-invite-title: 'You have new club invite'
+  new-club-invite: '%relatedUserName% invited you to “%clubTitle%”. Tap to join 👉'
+
+  approved-private-meeting-title: '%relatedUserName% approved meeting'
+  approved-private-meeting: 'Don''t miss out on "%meetingName%". %dateTime%'
+
+  arranged-private-meeting-title: '%relatedUserName% arranged meeting'
+  arranged-private-meeting: 'Tap to review time and date 👉'
+
+  changed-private-meeting-title: '%relatedUserName% changed meeting'
+  changed-private-meeting: 'Tap to review 👉'
+
+  cancelled-private-meeting-title: 'A meeting cancellation'
+  cancelled-private-meeting: 'Private meeting “%meetingName%” on %dateTime% has been cancelled'
+
+  join-discord-title: 'Join the Discord'
+  join-discord: 'Join our Discord & the discussion on how to build the Metaverse at Connect.Club'

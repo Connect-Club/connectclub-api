@@ -1,0 +1,158 @@
+security:
+    encoders:
+        App\Entity\User:
+            algorithm: argon2i
+
+    providers:
+        # used to reload user from session & other features (e.g. switch_user)
+        app_user_provider:
+            entity:
+                class: App\Entity\User
+                property: email
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+
+        metamask_auth_signature:
+            pattern: ^/api/v1/user/wallet/auth-signature
+            security: false
+
+        oauth_token:
+            pattern: ^/api/oauth/v2/token
+            security: false
+            stateless: true
+
+        documentation:
+            pattern: ^(\/api\/doc.json|\/)$
+            security: false
+
+        system:
+            pattern: ^/api/v1/(status|mobile-app-version|mobile-app-log)$
+            security: false
+
+        ethereum_public:
+            pattern: ^/api/v1/smart-contract/.*/info$
+            methods: ['GET']
+            security: false
+
+        room_event:
+            pattern: ^/api/(v1|v2)/video-room/event$
+            security: false
+
+        publuc_user:
+            pattern: ^/api/v1/user/(.*)/info$
+            security: false
+
+        references:
+            pattern: ^/api/v1/reference/(skills|goals|industries)$
+            methods: ['GET']
+            security: false
+
+        sms_verification:
+            pattern: ^/api/v1/sms/verification
+            security: false
+
+        country_codes:
+            pattern: ^/api/v1/location/phone-number-formats
+            security: false
+
+        notification_server:
+            pattern: ^/api/v1/device/(.*)$
+            security: false
+            methods: ['DELETE']
+
+        jitsi_token:
+            pattern: ^/api/v1/jitsi/token/(.*)/(.*)
+            security: false
+            methods: ['POST']
+
+        share_screen_page:
+            pattern: ^/s/(.*)
+            security: false
+            methods: ['GET']
+
+        statistics:
+            pattern: ^/api/v1/(community|video-room|event)/statistics$
+            security: false
+            methods: ['POST']
+
+        statistic_installation:
+            pattern: ^/api/v1/statistics/installation$
+            security: false
+            methods: ['POST']
+
+        event_internal_calls:
+            pattern: ^/api/v1/event/(.*)/(.*)/(promote|demote)$
+            security: false
+            methods: ['POST']
+
+        event_internal_call_statistic:
+            pattern: ^/api/v1/event/(.*)/statistic$
+            security: false
+            methods: ['POST']
+
+        notification_statistics:
+            pattern: ^/api/v1/notification/statistic/(.*)/(.*)
+            security: false
+            methods: ['POST']
+
+        frontend:
+            pattern: ^/api/v1/(popular\/inviters|festival\/event|festival\/scene|festival\/speakers)
+            security: false
+
+        frontend_landing:
+            pattern: ^/api/v1/landing
+            methods: ['GET']
+            security: false
+
+        frontend_lands:
+            pattern: ^/api/v1/land$
+            methods: [ 'GET' ]
+            security: false
+
+        stripe_subscription_webhook:
+            pattern: ^/api/v1/subscription/webhook
+            security: false
+
+        club_public:
+            pattern: ^/api/v1/club/(.*|.*\/event)$
+            methods: ['GET']
+            anonymous: true
+            fos_oauth: true
+            stateless: true
+            provider: app_user_provider
+
+        event_schedule_public:
+            pattern: ^/api/v1/event-schedule/(.*)$
+            methods: ['GET']
+            anonymous: true
+            fos_oauth: true
+            stateless: true
+            provider: app_user_provider
+
+        telegram:
+            pattern: ^/api/v1/telegram/hook$
+            methods: ['POST']
+            security: false
+
+        video_room_token:
+            pattern: ^/api/v2/video-room/token/(.*)
+            methods: ['POST']
+            anonymous: true
+            fos_oauth: true
+            stateless: true
+            provider: app_user_provider
+
+        main:
+            pattern: ^/api
+            fos_oauth: true
+            stateless: true
+            anonymous: false
+            provider: app_user_provider
+
+    access_control:
+        - { path: ^/api/v1/club/(.*)$, roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: ^/api/v1/event-schedule/(.*)$, roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: ^/api/v2/video-room/token/(.*)$, roles: [ IS_AUTHENTICATED_ANONYMOUSLY ] }
+        - { path: ^/api, roles: [ IS_AUTHENTICATED_FULLY ] }

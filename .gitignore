@@ -1,0 +1,38 @@
+.idea/
+.DS_Store
+###> symfony/framework-bundle ###
+/.env.local
+/.env.local.php
+/.env.*.local
+/config/secrets/prod/prod.decrypt.private.php
+/public/bundles/
+/var/cache/
+/var/log/
+/vendor/
+###< symfony/framework-bundle ###
+
+key.json
+/public/error_l
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml
+###< squizlabs/php_codesniffer ###
+
+###> symfony/phpunit-bridge ###
+.phpunit
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+helm/*/charts
+helm/*/Chart.lock
+
+/.php_cs.cache
+.phpcs-cache
+error_l

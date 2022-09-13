@@ -1,0 +1,24 @@
+<?php
+
+namespace App\Repository\VideoRoom;
+
+use Anboo\ApiBundle\Repository\IsolatedEntityManagerTrait;
+use App\Entity\VideoRoom\VideoRoomParticipantStatistic;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\Persistence\ManagerRegistry;
+
+/**
+ * @method VideoRoomParticipantStatistic|null find($id, $lockMode = null, $lockVersion = null)
+ * @method VideoRoomParticipantStatistic|null findOneBy(array $criteria, array $orderBy = null)
+ * @method VideoRoomParticipantStatistic[]    findAll()
+ * @method VideoRoomParticipantStatistic[] findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ */
+class VideoRoomParticipantStatisticRepository extends ServiceEntityRepository
+{
+    use IsolatedEntityManagerTrait;
+
+    public function __construct(ManagerRegistry $registry)
+    {
+        parent::__construct($registry, VideoRoomParticipantStatistic::class);
+    }
+}

@@ -1,0 +1,3 @@
+anboo_rabbitmq:
+  rabbitmq:
+    dsn: '%env(MESSENGER_TRANSPORT_DSN)%'

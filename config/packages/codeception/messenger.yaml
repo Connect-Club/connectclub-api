@@ -1,0 +1,12 @@
+framework:
+  messenger:
+    transports:
+      async: '%env(MESSENGER_TRANSPORT_DSN)%'
+      sync: 'sync://'
+    routing:
+      App\Message\SendNotificationMessage: sync
+      App\Message\SendNotificationMessageBatch: sync
+      App\Message\SendSmsMessage: sync
+      App\Message\AmplitudeEventStatisticsMessage: async_low_priority
+      App\Message\SendSlackMessage: async_low_priority
+      App\Message\SendSlackThreadMessage: async_low_priority

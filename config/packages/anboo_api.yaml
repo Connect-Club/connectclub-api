@@ -1,0 +1,5 @@
+services:
+  Anboo\ApiBundle\Validator\EntityExistsValidator:
+    autoconfigure: true
+    autowire: true
+    tags: ['validator.constraint_validator']

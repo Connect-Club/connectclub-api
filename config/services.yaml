@@ -1,0 +1,251 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    fos_oauth_server.server.class: App\OAuth2\OAuth2
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+        bind:
+            bool $isStage: '%env(STAGE)%'
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+            - '../src/Migrations/'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    App\Describer\:
+        resource: '../src/Describer'
+        tags: ['nelmio_api_doc.describer']
+
+    App\Monolog\Processor\:
+        resource: '../src/Monolog/Processor'
+        tags: ['monolog.processor']
+
+    Symfony\Component\DependencyInjection\ContainerInterface:
+        alias: 'service_container'
+
+    Symfony\Component\Lock\LockFactory:
+        public: true
+
+    App\OAuth2\Extension\MetaMaskGrantExtension:
+        tags:
+            - { name: fos_oauth_server.grant_extension, uri: 'https://connect.club/metamask' }
+
+    App\OAuth2\Extension\PhoneNumberGrantExtension:
+        tags:
+            - { name: fos_oauth_server.grant_extension, uri: 'https://connect.club/sms' }
+
+    App\Serializer\Normalizer\ProblemNormalizer:
+        bind:
+            $debug: '%kernel.debug%'
+        tags: ['serializer.normalizer']
+
+    App\Swagger\RouteDescriber\:
+        resource: '../src/Swagger/RouteDescriber'
+        tags: ['nelmio_api_doc.route_describer']
+
+    App\Swagger\ModelDescriber\:
+        resource: '../src/Swagger/ModelDescriber'
+        tags: ['nelmio_api_doc.model_describer']
+
+    Nelmio\ApiDocBundle\ApiDocGenerator:
+        alias: nelmio_api_doc.generator.default
+
+    fos_oauth_server:
+        class: App\OAuth2\OAuth2
+
+    App\EventSubscriber\PerformanceRequestLoggerSubscriber:
+        tags:
+            - { name: kernel.event_subscriber }
+            - { name: monolog.logger, channel: 'performance' }
+
+    GuzzleHttp\Client:
+        public: true
+
+    GuzzleHttp\ClientInterface:
+        alias: GuzzleHttp\Client
+        public: true
+
+    MaxMind\Db\Reader:
+        public: true
+        arguments:
+            - '%env(MIXMIND_DATABASE_SRC)%'
+
+    App\Service\Notification\NotificationManager:
+        public: true
+
+    App\MessageHandler\SendNotificationMessageHandler:
+        public: true
+        autowire: true
+
+    App\PropertyInfo\SerializerPropertyInfoExtractor:
+        public: true
+        autowire: true
+        tags:
+            - { name: property_info.list_extractor, priority: -998 }
+
+    App\Serializer\Normalizer\StdClassObjectNormalizer:
+        public: true
+        autowire: true
+        tags:
+            - { name: serializer.normalizer, priority: 255 }
+
+    App\Serializer\Normalizer\PhoneNumberNormalizer:
+        public: true
+        autowire: true
+        tags:
+            - { name: serializer.normalizer, priority: 255 }
+
+    App\Serializer\Normalizer\EmptyArrayNormalizer:
+        public: true
+        autowire: true
+        tags:
+            - { name: serializer.normalizer }
+
+    App\Filter\NestedEntityFilter:
+        autowire: true
+        bind:
+            $typeFilters: !tagged 'type.filter'
+        tags: ['request.filter']
+
+    Monolog\Processor\PsrLogMessageProcessor:
+        tags: { name: monolog.processor, handler: sentry }
+
+    fos_oauth_server.server:
+        class: App\OAuth2\OAuth2
+        public: true
+        autowire: true
+        arguments:
+            $storage: '@fos_oauth_server.storage'
+            $config: '%fos_oauth_server.server.options%'
+
+    OAuth2\OAuth2:
+        alias: 'fos_oauth_server.server'
+
+    fos_oauth_server.controller.token:
+        alias: 'App\Controller\V1\TokenController'
+        public: true
+
+    App\Client\VonageSMSClient:
+        public: true
+
+    App\Service\JwtToken:
+        public: true
+
+    App\Service\MatchingClient:
+        public: true
+
+    App\Service\MetamaskManager:
+        public: true
+
+    App\Doctrine\Listener\CacheAwareListener:
+        autowire: true
+        tags:
+            - { name: doctrine.event_listener, event: getCache }
+
+    Stripe\StripeClient:
+        public: true
+        arguments:
+            $config: '%env(STRIPE_SECRET_KEY)%'
+
+    App\Controller\V1\SubscriptionController:
+        arguments:
+            $stripePublicKey: '%env(STRIPE_PUBLIC_KEY)%'
+
+    App\Service\SubscriptionWebhookService:
+        arguments:
+            $webhookSecret: '%env(STRIPE_WEBHOOK_SECRET)%'
+            $backendName: '%env(STRIPE_BACKEND_NAME)%'
+
+    App\Service\StripeSubscriptionService:
+        arguments:
+            $stripeBackendName: '%env(STRIPE_BACKEND_NAME)%'
+
+    App\EventSubscriber\RequestLoggerSubscriber:
+        arguments:
+            $matcher: '@router'
+
+    Redis: '@snc_redis.default'
+
+    App\Service\PhoneNumberManager:
+        arguments:
+            $testPhonePrefix: '%env(TEST_PHONE_PREFIX)%'
+
+    App\Service\UserService:
+        arguments:
+            $isStage: '%env(STAGE)%'
+
+    App\Service\Amplitude\AmplitudeManager:
+        public: true
+        arguments:
+            $legacyApiKey: '%env(AMPLITUDE_LEGACY_API_KEY)%'
+            $apiKey: '%env(AMPLITUDE_API_KEY)%'
+
+    App\Service\SMS\TwoFactorAuthenticatorManager:
+        arguments:
+            $providers: !tagged 'sms.provider'
+
+    App\Service\SMS\TestPhoneNumberSmsProvider:
+        public: true
+        tags:
+            - { name: 'sms.provider', priority: 40 }
+
+    App\Service\SMS\PushNotificationSmsProvider:
+        public: true
+        tags:
+            - { name: 'sms.provider', priority: 30 }
+
+    App\Service\SMS\TwilioSmsProvider:
+        public: true
+        tags:
+            - { name: 'sms.provider', priority: 20 }
+
+    App\Service\SMS\VonageSmsProvider:
+        public: true
+        tags:
+            - { name: 'sms.provider', priority: 10 }
+
+    TelegramBot\Api\BotApi:
+        public: true
+        arguments:
+            - '%env(TELEGRAM_BOT_API_KEY)%'
+
+    App\Client\ElasticSearchClientBuilder:
+        public: true
+
+    App\Client\NftImageClient:
+        public: true
+
+    _instanceof:
+        App\Filter\FilterInterface:
+            tags: ['request.filter']
+
+        App\Filter\Type\TypeFilterInterface:
+            tags: ['type.filter']
+
+        App\Service\SMS\SmsProviderInterface:
+            tags: ['sms.provider']
+            public: true
+
+        App\Controller\BaseController:
+            calls:
+                - ['setFilters', [!tagged 'request.filter']]

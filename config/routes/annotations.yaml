@@ -1,0 +1,14 @@
+controllers_v1:
+    resource: ../../src/Controller/V1/
+    type: annotation
+    prefix: /api/v1
+
+controllers_v2:
+    resource: ../../src/Controller/V2/
+    type: annotation
+    prefix: /api/v2
+
+pages:
+    resource: ../../src/Controller/Page/
+    type: annotation
+    prefix: /

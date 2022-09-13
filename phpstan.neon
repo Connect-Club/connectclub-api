@@ -1,0 +1,6 @@
+parameters:
+  excludes_analyse:
+    - src/Migrations/*.php
+    - tests/*
+  universalObjectCratesClasses:
+    - Stripe\StripeObject

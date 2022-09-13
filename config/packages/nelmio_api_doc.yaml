@@ -1,0 +1,276 @@
+nelmio_api_doc:
+    documentation:
+        info:
+            title: Connect Club API
+            description: Connect Club API
+            version: 1.0.0
+        securityDefinitions:
+          oauth2BearerToken:
+            type: apiKey
+            # template: "Bearer {apiKey}"
+            description: Before type 'Bearer ' prefix if you're use OAuth2 token (Bearer Test_access_token_for_user_main)
+            name: Authorization
+            in: header
+
+          oauth2Password:
+            description: "Testing:<br>
+                          username: test@test.ru<br>
+                          password: qwerty<br>
+                          client_id: 1_3u3bpqxw736s4kgo0gsco4kw48gos800gscg4s4w8w80oogc8c<br>
+                          client_secret: 6cja0geitwsok4gckw0cc0c04sc0sgwgo8kggcoc08wocsw8wg<br>"
+            type: oauth2
+            flow: password
+            tokenUrl: /api/oauth/v2/token
+        security:
+          - oauth2Password: []
+          - oauth2BearerToken: []
+#          - oauth2ClientCredentials: []
+        definitions:
+            OAuth2TokenResponse:
+                type: object
+                properties:
+                    access_token:
+                        type: string
+                        example: "Mzk1MDVhMzRjODUwMDdkZTBhMDFmZjdlZmRkMmUwZjI2ODU2YjJhNmU0ZDU2ZjFlNTg3Y2I5NDg0OWRmMWVmZQ"
+                    expires_in:
+                        type: integer
+                        example: 3600
+                    token_type:
+                        type: string
+                        example: "bearer"
+                    scope:
+                        type: string
+                    refresh_token:
+                        type: string
+                        example: "ZTdlOWE5OGMzOGUzZTJmZTE1NjMzNDRjN2JjODVkZTA1MTc0ODI0ZDk3MDUxMTc4MGJkY2M3NjBlNjk3ZWExNg"
+        paths:
+            /api/oauth/v2/token:
+                get:
+                    summary: "Get OAuth2 authorization token"
+                    description: "Get OAuth2 authorization token"
+                    produses: ["application/json"]
+                    tags: ["Authorization"]
+                    security: []
+                    parameters:
+                        - name: "grant_type"
+                          in: "query"
+                          type: "string"
+                          enum: ["password", "client_credentials", "refresh_token", "access_token", "https://connect.club/facebook", "https://connect.club/google", "https://connect.club/apple", "https://connect.club/sms"]
+                          default: "password"
+                          description: "Authorization grant type"
+
+                        - name: "phone"
+                          in: "query"
+                          type: "string"
+                          description: "Sms verification phone number"
+
+                        - name: "code"
+                          in: "query"
+                          type: "string"
+                          description: "Sms verification code"
+
+                        - name: "scope"
+                          in: "query"
+                          type: "string"
+                          description: "Authorization scope"
+
+                        - name: "client_id"
+                          in: "query"
+                          type: "string"
+                          default: "1_3u3bpqxw736s4kgo0gsco4kw48gos800gscg4s4w8w80oogc8c"
+                          description: "OAuth2 client id"
+
+                        - name: "client_secret"
+                          in: "query"
+                          type: "string"
+                          default: "6cja0geitwsok4gckw0cc0c04sc0sgwgo8kggcoc08wocsw8wg"
+                          description: "OAuth2 client secret"
+
+                        - name: "username"
+                          in: "query"
+                          type: "string"
+                          default: "root"
+                          description: "Login (if exists)"
+                          required: false
+
+                        - name: "password"
+                          in: "query"
+                          type: "string"
+                          default: "root"
+                          description: "Password (if exists)"
+                          required: false
+
+                        - name: "refresh_token"
+                          in: "query"
+                          type: "string"
+                          default: ""
+                          description: "Refresh token (for grant_type = refresh_token)"
+                          required: false
+
+                        - name: "token"
+                          in: "query"
+                          type: "string"
+                          default: ""
+                          description: "Google idToken (for grant_type = https://connect.club/google) | Facebook accessToken (for grant_type = https://connect.club/facebook) | Apple idToken (for grant_type = https://connect.club/apple)"
+                          required: false
+
+                        - name: "google_client_id"
+                          in: "query"
+                          type: "string"
+                          default: ""
+                          description: "Google client id"
+                          required: false
+
+                        - name: "name"
+                          in: "query"
+                          type: "string"
+                          default: ""
+                          description: "User name (for grant_type = https://connect.club/apple)"
+                          required: false
+
+                        - name: "surname"
+                          in: "query"
+                          type: "string"
+                          default: ""
+                          description: "User surname (for grant_type = https://connect.club/apple)"
+                          required: false
+
+                        - name: "referer_id"
+                          in: "query"
+                          type: "string"
+                          default: ""
+                          description: "Id referer user"
+                          required: false
+
+                        - name: "source"
+                          in: "query"
+                          type: "string"
+                          default: ""
+                          description: "Source"
+                          required: false
+                    responses:
+                        200:
+                            description: "Success OAuth2 server response"
+                            schema:
+                                $ref: '#/definitions/OAuth2TokenResponse'
+                post:
+                    security: []
+                    consumes:
+                        - 'application/x-www-form-urlencoded'
+                    summary: "Get OAuth2 authorization token"
+                    description: "Get OAuth2 authorization token"
+                    produses: ["application/json"]
+                    tags: ["Authorization"]
+                    parameters:
+                        - name: "grant_type"
+                          in: "formData"
+                          type: "string"
+                          enum: ["password", "client_credentials", "refresh_token", "access_token", "https://connect.club/metamask", "https://connect.club/sms"]
+                          default: "password"
+                          description: "Authorization grant type"
+
+                        - name: "phone"
+                          in: "formData"
+                          type: "string"
+                          description: "Sms verification phone number"
+
+                        - name: "code"
+                          in: "formData"
+                          type: "string"
+                          description: "Sms verification code"
+
+                        - name: "scope"
+                          in: "formData"
+                          type: "string"
+                          description: "Authorization scope"
+
+                        - name: "client_id"
+                          in: "formData"
+                          type: "string"
+                          default: "1_3u3bpqxw736s4kgo0gsco4kw48gos800gscg4s4w8w80oogc8c"
+                          description: "OAuth2 client id"
+
+                        - name: "client_secret"
+                          in: "formData"
+                          type: "string"
+                          default: "6cja0geitwsok4gckw0cc0c04sc0sgwgo8kggcoc08wocsw8wg"
+                          description: "OAuth2 client secret"
+
+                        - name: "refresh_token"
+                          in: "formData"
+                          type: "string"
+                          default: ""
+                          description: "Refresh token (for grant_type = refresh_token)"
+                          required: false
+
+                        - name: "token"
+                          in: "formData"
+                          type: "string"
+                          default: ""
+                          description: "Google idToken (for grant_type = https://connect.club/google) | Facebook accessToken (for grant_type = https://connect.club/facebook) | Apple idToken (for grant_type = https://connect.club/apple)"
+                          required: false
+
+                        - name: "name"
+                          in: "formData"
+                          type: "string"
+                          default: ""
+                          description: "User name (for grant_type = https://connect.club/apple)"
+                          required: false
+
+                        - name: "surname"
+                          in: "formData"
+                          type: "string"
+                          default: ""
+                          description: "User surname (for grant_type = https://connect.club/apple)"
+                          required: false
+
+                        - name: "referer_id"
+                          in: "formData"
+                          type: "string"
+                          default: ""
+                          description: "Id referer user"
+                          required: false
+
+                        - name: "source"
+                          in: "formData"
+                          type: "string"
+                          default: ""
+                          description: "Source"
+                          required: false
+
+                        - name: "device_id"
+                          in: "formData"
+                          type: "string"
+                          default: ""
+                          description: "Device id for metatamask authorization"
+                          required: false
+
+                        - name: "text"
+                          in: "formData"
+                          type: "string"
+                          default: ""
+                          description: "Signed text for metatamask authorization"
+                          required: false
+
+                        - name: "address"
+                          in: "formData"
+                          type: "string"
+                          default: ""
+                          description: "Wallet address for metatamask authorization"
+                          required: false
+
+                        - name: "signature"
+                          in: "formData"
+                          type: "string"
+                          default: ""
+                          description: "Signature for metatamask authorization"
+                          required: false
+                    responses:
+                        200:
+                            description: "Success OAuth2 server response"
+                            schema:
+                                $ref: '#/definitions/OAuth2TokenResponse'
+    areas: # to filter documented areas
+        path_patterns:
+            - ^/api(?!/doc.json$) # Accepts routes under /api except /api/doc
+

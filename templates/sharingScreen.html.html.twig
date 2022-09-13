@@ -1,0 +1,115 @@
+<html lang="en">
+<head>
+    <title>Connect club - Screen sharing</title>
+
+    <link rel="icon" href="https://connect.club/favicon.svg" />
+    <link rel="mask-icon" href="https://connect.club/mask-icon.svg" color="#000000" />
+    <link rel="apple-touch-icon" href="https://connect.club/apple-touch-icon.png" />
+
+    <script type="module" src="{{ asset('sharing.js') }}?version=2"></script>
+
+    <style>
+        @font-face {
+            font-family: 'Proxima Nova';
+            src: url('https://connect.club/font/ProximaNova-Regular.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Proxima Nova';
+            font-weight: bold;
+            src: url('https://connect.club/font/ProximaNova-Bold.woff2') format('woff2');
+        }
+        @font-face {
+            font-family: 'Proxima Nova';
+            font-weight: 900;
+            src: url('https://connect.club/font/ProximaNova-Black.woff2') format('woff2');
+        }
+        *,::after,::before{box-sizing:border-box}@media (prefers-reduced-motion:no-preference){:root{scroll-behavior:smooth}}html{font-size:62.5%}body{margin:0;font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans","Liberation Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";font-size:1.6rem;font-weight:400;line-height:1.5;color:#000;background-color:#fff;-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}hr{margin:1.6rem 0;color:inherit;background-color:currentColor;border:0;opacity:.25}hr:not([size]){height:1px}h1,h2,h3,h4,h5,h6{margin-top:0;margin-bottom:.8rem;font-weight:500;line-height:1.2;color:#000}h1{font-size:5.4rem}h2{font-size:2.4rem}h3{font-size:2.1rem}h4{font-size:2.1rem}h5{font-size:1.2rem}h6{font-size:1rem}p{margin-top:0;margin-bottom:1.6rem}abbr[data-bs-original-title],abbr[title]{-webkit-text-decoration:underline dotted;text-decoration:underline dotted;cursor:help;-webkit-text-decoration-skip-ink:none;text-decoration-skip-ink:none}address{margin-bottom:1.6rem;font-style:normal;line-height:inherit}ol,ul{padding-left:3.2rem}dl,ol,ul{margin-top:0;margin-bottom:1.6rem}ol ol,ol ul,ul ol,ul ul{margin-bottom:0}dt{font-weight:700}dd{margin-bottom:.8rem;margin-left:0}blockquote{margin:0 0 1.6rem}b,strong{font-weight:bolder}small{font-size:.875em}mark{padding:.2em;background-color:#fcf8e3}sub,sup{position:relative;font-size:.75em;line-height:0;vertical-align:baseline}sub{bottom:-.25em}sup{top:-.5em}a{color:#4d7dd0;text-decoration:none}a:hover{color:#3b598d}a:not([href]):not([class]),a:not([href]):not([class]):hover{color:inherit;text-decoration:none}code,kbd,pre,samp{font-family:SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;font-size:1em;direction:ltr;unicode-bidi:bidi-override}pre{display:block;margin-top:0;margin-bottom:1.6rem;overflow:auto;font-size:.875em}pre code{font-size:inherit;color:inherit;word-break:normal}code{font-size:.875em;color:#d63384;word-wrap:break-word}a>code{color:inherit}kbd{padding:.32rem .64rem;font-size:.875em;color:#fff;background-color:#212529;border-radius:.32rem}kbd kbd{padding:0;font-size:1em;font-weight:700}figure{margin:0 0 1.6rem}img,svg{vertical-align:middle}table{caption-side:bottom;border-collapse:collapse}caption{padding-top:.8rem;padding-bottom:.8rem;color:#6c757d;text-align:left}th{text-align:inherit;text-align:-webkit-match-parent}tbody,td,tfoot,th,thead,tr{border-color:inherit;border-style:solid;border-width:0}label{display:inline-block}button{border-radius:0}button:focus:not(:focus-visible){outline:0}button,input,optgroup,select,textarea{margin:0;font-family:inherit;font-size:inherit;line-height:inherit}button,select{text-transform:none}[role=button]{cursor:pointer}select{word-wrap:normal}select:disabled{opacity:1}[list]::-webkit-calendar-picker-indicator{display:none}[type=button],[type=reset],[type=submit],button{-webkit-appearance:button}[type=button]:not(:disabled),[type=reset]:not(:disabled),[type=submit]:not(:disabled),button:not(:disabled){cursor:pointer}::-moz-focus-inner{padding:0;border-style:none}textarea{resize:vertical}fieldset{min-width:0;padding:0;margin:0;border:0}legend{float:left;width:100%;padding:0;margin-bottom:.8rem;font-size:calc(2.04rem + .3vw);line-height:inherit}@media (min-width:1200px){legend{font-size:2.4rem}}legend+*{clear:left}::-webkit-datetime-edit-day-field,::-webkit-datetime-edit-fields-wrapper,::-webkit-datetime-edit-hour-field,::-webkit-datetime-edit-minute,::-webkit-datetime-edit-month-field,::-webkit-datetime-edit-text,::-webkit-datetime-edit-year-field{padding:0}::-webkit-inner-spin-button{height:auto}[type=search]{outline-offset:-2px;-webkit-appearance:textfield}::-webkit-search-decoration{-webkit-appearance:none}::-webkit-color-swatch-wrapper{padding:0}::file-selector-button{font:inherit}::-webkit-file-upload-button{font:inherit;-webkit-appearance:button}output{display:inline-block}iframe{border:0}summary{display:list-item;cursor:pointer}progress{vertical-align:baseline}[hidden]{display:none!important}
+        body { background: #F4F6FA; font-family: 'Proxima Nova', 'Helvetica', serif; color: rgba(0,0,0,.87);}
+        .container { width: 480px; margin: 0 auto 40px; padding: 40px; background: #fff; border-radius: 20px; }
+        .button { padding: 1.0rem 5.15rem; font-size: 1.5rem; margin-bottom: 4rem; line-height: 1.8rem; color: #fff; background: rgba(83, 142, 244, 1); display: inline-flex; border-radius: 10rem; cursor: pointer; border: 0 none }
+        .button:hover { background: rgba(83, 142, 244, .8); color: rgba(255, 255, 255, 1) !important; }
+        .align-center { text-align: center; }
+        .disconnected #state { color: #f54949 }
+        .connected #state { color: #5dc56e }
+        .connecting #state { color: #fbc944 }
+
+        #stop, .connected p, .connected #start { display: none }
+        .connected #stop { display: inline-flex; }
+        p { line-height: 3.04rem  }
+        .always-show { display: block !important }
+        .logo { margin: 4rem 0;text-align: center; }
+        .image { margin: 2.4rem 0 1.6rem; }
+        .image img { max-width: 100% }
+        .m-0 { margin: 0; }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <a title="Connect club" target="_blank" rel="noopener" href="https://connect.club/">
+            <svg viewBox="0 0 29 16" width="73" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M27.4011 4.1618C28.0456 5.27309 28.3981 6.51785 28.4282 7.7887L28.4251 7.78572C28.4413 8.62166 28.3295 9.45536 28.0941 10.2604C27.7244 11.5227 26.8093 12.989 25.7944 13.8447C23.3768 15.8805 21.6138 15.998 18.4098 15.998C18.3155 15.998 18.2232 15.9985 18.1326 15.999C17.1617 16.0042 16.4045 16.0084 15.8435 15.38C15.3315 14.8076 15.1429 13.8008 15.6764 13.058C16.1762 12.3608 16.8186 12.1994 17.9943 12.214L18.0172 12.2145C18.5877 12.225 19.8842 12.2489 20.4119 12.214C22.6556 12.0566 24.4151 10.3067 24.4944 8.15416C24.4882 6.64822 23.8214 5.54301 23.055 4.8869C21.6682 3.7008 20.0817 3.75927 18.6933 3.81044C17.3343 3.86052 16.1651 3.90361 15.5584 2.76596C14.8578 1.43906 15.8819 0.128347 17.1573 0.0344002C18.1661 -0.0389968 20.9087 -0.000830013 21.8562 0.206118C24.2752 0.747754 26.2391 2.1436 27.4011 4.1618Z" fill="url(#paintheaderlogo_linear_logo)"></path><path d="M6.57419 0.206214C4.15363 0.74785 2.19004 2.1437 1.0327 4.16176C0.386522 5.27269 0.0324466 6.51753 0.00104638 7.7888C-0.0121977 8.62379 0.100343 9.45628 0.335194 10.2605C0.704661 11.5228 1.6198 12.9891 2.63446 13.8448C5.05186 15.8806 6.8147 15.9981 10.0185 15.9981C10.1129 15.9981 10.2054 15.9986 10.296 15.9991C11.268 16.0043 12.0237 16.0084 12.5846 15.3801C13.098 14.8077 13.2851 13.8009 12.7517 13.0581C12.252 12.3609 11.6096 12.1995 10.4355 12.2141C10.2091 12.217 9.99997 12.22 9.80605 12.2229C8.99412 12.2347 8.44847 12.2427 8.01665 12.2141C5.77326 12.0567 4.01375 10.3068 3.93449 8.15426C3.9406 6.64832 4.60734 5.5431 5.37386 4.887C6.76054 3.7009 8.34687 3.75937 9.73519 3.81053C11.094 3.86061 12.2632 3.9037 12.8698 2.76606C13.5703 1.43916 12.5464 0.128443 11.271 0.0344962C10.2624 -0.0389008 7.51999 -0.000734041 6.57419 0.206214Z" fill="url(#paintheaderlogo2_linear_logo)"></path><defs><linearGradient id="paintheaderlogo_linear_logo" x1="0" y1="9.55318e-05" x2="0" y2="16" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="rgba(77, 125, 208, 0.08)"></stop><stop offset="1" stop-color="rgba(77, 125, 208, 0.08)"></stop></linearGradient><linearGradient id="paintheaderlogo2_linear_logo" x1="0" y1="9.55318e-05" x2="0" y2="16" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="rgba(77, 125, 208, 0.08)"></stop><stop offset="1" stop-color="rgba(77, 125, 208, 0.08)"></stop></linearGradient></defs></svg>
+        </a>
+    </div>
+    <div class="container disconnected" id="wrapper">
+        <p class="align-center always-show"><b>Status: <span id="state">not sharing</span></b></p>
+        <div class="align-center">
+            <button id="start" class="button" onclick="window.start()">Share screen</button>
+            <button id="stop" class="button" onclick="window.stop()" disabled="disabled">Stop</button>
+        </div>
+
+        <p>Don’t forget to choose what exactly you'd like to share:
+            an <b>entire screen</b>, a <b>particular window</b> or a <b>browser tab</b>.</p>
+        <div class="image">
+            <img src="{{ asset('sharing.png') }}" alt="Share screen">
+        </div>
+        <p class="m-0">Please note that if you'd like to share a <b>video with sound</b>, check the box next to audio sharing in the bottom left corner of the Chrome tab.</p>
+
+        <input type="hidden" id="connectionState" value="None">
+    </div>
+
+    <script>
+        console.log('{{ browserName }}')
+        window.jitsiToken = '{{ token }}';
+        window.jitsiAddress = '{{ jitsiAddress }}';
+
+        const connectionStateDOM = document.getElementById('connectionState');
+        const visibleStateDOM = document.getElementById('state');
+        const wrapperDOM = document.getElementById('wrapper');
+
+        const observeDOM = (() => {
+            const MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
+            return (obj, callback) => {
+                if (!obj || obj.nodeType !== 1) return;
+
+                if (MutationObserver) {
+                    const mutationObserver = new MutationObserver(callback)
+
+                    mutationObserver.observe(obj, { attributes: true, childList: true, subtree: true })
+                    return mutationObserver
+                } else if (window.addEventListener) {
+                    obj.addEventListener('DOMNodeInserted', callback, false)
+                    obj.addEventListener('DOMNodeRemoved', callback, false)
+                }
+            }
+        })();
+
+        const setState = (state = 'None') => {
+            let className = 'disconnected';
+            let text = 'not sharing';
+            if (state === 'connecting') {
+                className = 'connecting';
+                text = 'connecting...';
+            } else if (state === 'connected') {
+                className = 'connected';
+                text = 'sharing screen';
+            }
+            visibleStateDOM.innerText = text;
+            wrapperDOM.classList.remove('connecting', 'connected', 'disconnected');
+            wrapperDOM.classList.add(className);
+        }
+
+        observeDOM(connectionStateDOM, () => {
+            setState(connectionStateDOM.value)
+        });
+    </script>
+</body>
+</html>

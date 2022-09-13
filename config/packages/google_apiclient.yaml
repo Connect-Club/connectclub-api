@@ -1,0 +1,8 @@
+services:
+    Google_Client:
+        class: Google_Client
+        calls:
+            - [setClientId, ['%env(GOOGLE_OAUTH_APP_ID)%']]
+            - [setClientSecret, ['%env(GOOGLE_OAUTH_SECRET)%']]
+            - [setRedirectUri, ['%env(GOOGLE_OAUTH_REDIRECT_URI)%']]
+            - [setAuthConfig, [{client_id: '%env(GOOGLE_OAUTH_APP_ID)%', client_secret: '%env(GOOGLE_OAUTH_SECRET)%', redirect_uris: ['%env(GOOGLE_OAUTH_REDIRECT_URI)%']}]]

@@ -1,0 +1,157 @@
+version: '2.2'
+services:
+  db:
+    image: postgres:11
+    container_name: db
+    environment:
+      - POSTGRES_PASSWORD=super_password
+      - POSTGRES_DB=connect_club
+      - POSTGRES_TEST_DB=connect_club_test
+    ports:
+      - '${POSTGRESQL_PORT:-5432}:5432'
+    volumes:
+      - ./docker/create_test_postgres_db.sh:/docker-entrypoint-initdb.d/create_test_postgres_db.sh
+    networks:
+      main:
+        aliases:
+          - db
+
+  php:
+    build: ./docker/php
+    volumes:
+      - ./:/var/www
+      - ./key.json:/var/www/key.json
+      - ./var/cache/xhprof:/tmp/xhprof
+    environment:
+      #Start OS configuration
+      PHP_IDE_CONFIG: 'serverName=ConnectAPI'
+      XDEBUG_CONFIG: 'remote_enable=1 remote_mode=req remote_port=${DOCKER_XDEBUG_PORT:-10000} remote_host=${DOCKER_XDEBUG_HOST:-172.17.0.1} idekey=${DOCKER_XDEBUG_IDE_KEY:-PHPSTORM}'
+      XHPROF_ENABLE: '${XHPROF_ENABLE:-0}'
+    depends_on:
+      - db
+      - jabber
+      - rabbitmq
+      - redis
+      - elasticsearch
+    networks:
+      main:
+        aliases:
+          - php
+
+  redis:
+    image: "redis:alpine"
+    networks:
+      main:
+        aliases:
+          - redis
+
+  xhprof:
+    build:
+      context: ./docker/xhprof
+    ports:
+      - 8881:80
+    volumes:
+      - ./var/cache/xhprof:/tmp/xhprof
+    depends_on:
+      - php
+
+  jabber:
+    image: registry.gitlab.com/connect.club/dev/3rdparty/ejabberd:master-76ac9951
+    user: ejabberd
+    hostname: jabber-0
+    environment:
+      POSTGRESQL_DATABASE: 'connect_club_jabber'
+      POSTGRESQL_HOST: 'db_jabber'
+      POSTGRESQL_PORT: '5432'
+      POSTGRESQL_USERNAME: 'postgres'
+      POSTGRESQL_PASSWORD: 'super_password'
+      JABBER_HOST: 'localhost'
+      INITIALIZE_DATABASE: 1
+      PUSH_POST_URL: "http://web/api/v1/chat/push"
+      PUSH_TOKEN: "token"
+      STANDALONE: 1
+      HOSTNAME_BASE: jabber
+    ports:
+      - '${JABBER_API_PORT:-5281}:5281'
+    depends_on:
+      - db_jabber
+    networks:
+      jabber: { }
+      main:
+        aliases:
+          - jabber
+
+  db_jabber:
+    image: postgres:11
+    container_name: db_jabber
+    ports:
+      - 5555:5432
+    environment:
+      - POSTGRES_PASSWORD=super_password
+      - POSTGRES_DB=connect_club_jabber
+    networks:
+      jabber: { }
+      main:
+        aliases:
+          - jabber
+
+  web:
+    image: nginx:latest
+    ports:
+      - "8888:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/connect-club.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - php
+    networks:
+      main:
+        aliases:
+          - web
+
+  rabbitmq:
+    image: "rabbitmq:3-management"
+    volumes:
+      - ./docker/rabbitmq/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+    ports:
+      - "${RABBITMQ_WEB_PORT:-15672}:15672"
+      - "${RABBITMQ_PORT:-5672}:5672"
+    networks:
+      main:
+        aliases:
+          - rabbitmq
+
+  notification_server:
+    image: registry.gitlab.com/connect.club/push-sender:last-build
+    networks:
+      main:
+        aliases:
+          - notification_server
+    environment:
+      PORT: 80
+      API_HOST: http://web
+
+  elasticsearch:
+    image: elasticsearch:7.12.1
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 262144
+        hard: 262144
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms750m -Xmx750m"
+    networks:
+      main:
+        aliases:
+          - elasticsearch
+
+networks:
+  main:
+  jabber:

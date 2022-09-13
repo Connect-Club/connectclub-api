@@ -1,0 +1,16 @@
+ekino_new_relic:
+    enabled: false
+    application_name: "%env(NEW_RELIC_APP_NAME)%"
+    license_key: "%env(NEW_RELIC_LICENSE)%"
+    exceptions: true
+    deprecations: false
+    instrument: false
+    commands:
+        enabled: true
+    http:
+        enabled: true
+        using_symfony_cache: false
+        transaction_naming: route
+        transaction_naming_service: ~
+        ignored_routes: []
+        ignored_paths: []

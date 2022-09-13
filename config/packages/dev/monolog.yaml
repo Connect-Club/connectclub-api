@@ -1,0 +1,36 @@
+monolog:
+    handlers:
+        docker_debug_filter:
+            type: filter
+            handler: docker_debug
+            min_level: info
+            max_level: warning
+            channels: ["!request", "!php"]
+        docker_debug:
+            type: stream
+            path: php://stdout
+        docker_error:
+            level: error
+            type: stream
+            path: php://stderr
+        doctrine:
+            type: console
+            level: debug
+            channels: ['doctrine']
+        console:
+            type: console
+            level: info
+            process_psr_3_messages: false
+            channels: ["!event", "!doctrine", "!console", "!php"]
+        deprecation:
+            type: stream
+            path: php://stdout
+        deprecation_filter:
+            type: filter
+            handler: deprecation
+            max_level: info
+            channels: ["php"]
+        sentry:
+            type: service
+            id: Sentry\Monolog\Handler
+            level: error
